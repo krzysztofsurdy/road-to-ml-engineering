@@ -1,0 +1,1975 @@
+{
+  "title": "Applied LLM Engineer Roadmap",
+  "subtitle": "A 6-month transition plan for Senior Software Engineers",
+  "phases": [
+    {
+      "id": "phase-1",
+      "title": "Foundations",
+      "description": "Mathematical intuition, Python scientific computing, and building neural networks from scratch. No frameworks — just NumPy and understanding.",
+      "weeks": "1–6",
+      "color": "#6366f1",
+      "migration_tips": {
+        "php": "You're entering a world where scripts don't die after a request. Python processes persist in memory — think of a training loop as a daemon, not a controller action. PHP arrays are loose bags of mixed types; NumPy arrays are typed, contiguous memory blocks where shape matters. `$arr[] = $val` has no equivalent — you pre-allocate tensors.",
+        "java": "Drop the ceremony. No `AbstractMathOperationFactory`. Python rewards concise, readable code. Your strong typing instincts will fight with duck typing — embrace it for prototyping, then use type hints when stabilizing. Maven/Gradle → pip/conda: dependency management is simpler but messier. Get comfortable with virtual environments (`venv` or `conda`).",
+        "nodejs": "Your async event loop intuition needs a hard reset. ML training is intentionally blocking — you WANT the CPU/GPU saturated. `Promise.all()` thinking doesn't apply; think batch processing. JSON is your comfort zone, but DataFrames (Pandas) and tensors (NumPy) are the native data structures here. Learn to think in matrix shapes, not object shapes.",
+        "csharp": "LINQ → NumPy/Pandas: the fluent API instinct maps well. `arr.Where(x => x > 0)` becomes `arr[arr > 0]` (boolean indexing). NuGet → pip: less rigorous versioning, use lock files. .NET's math libraries are anemic compared to NumPy/SciPy. Visual Studio → Jupyter Notebooks for exploration (you'll feel naked without an IDE at first)."
+      },
+      "weeks_detail": [
+        {
+          "id": "w1",
+          "week": 1,
+          "title": "Python for Engineers & Dev Environment",
+          "objectives": [
+            "Set up a reproducible ML dev environment (pyenv + poetry or conda)",
+            "Master Python idioms that differ from your background language",
+            "Understand the GIL, memory model, and why Python is the ML lingua franca"
+          ],
+          "tasks": [
+            {
+              "id": "t1-1",
+              "text": "Install pyenv, create a Python 3.11+ virtual environment",
+              "done": false
+            },
+            {
+              "id": "t1-2",
+              "text": "Complete a 'Python for programmers' crash course (not a beginner tutorial)",
+              "done": false
+            },
+            {
+              "id": "t1-3",
+              "text": "Write list comprehensions, generators, decorators, and context managers",
+              "done": false
+            },
+            {
+              "id": "t1-4",
+              "text": "Set up Jupyter Lab and learn notebook workflow (cells, magic commands)",
+              "done": false
+            },
+            {
+              "id": "t1-5",
+              "text": "Practice: rewrite a small utility from your main language in idiomatic Python",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Fluent Python, 2nd Ed (Luciano Ramalho)",
+              "url": "https://www.oreilly.com/library/view/fluent-python-2nd/9781492056348/",
+              "type": "book"
+            },
+            {
+              "title": "Python for Programmers (Real Python)",
+              "url": "https://realpython.com/",
+              "type": "course"
+            },
+            {
+              "title": "Talk Python Training",
+              "url": "https://training.talkpython.fm/",
+              "type": "course"
+            }
+          ],
+          "terminology": {
+            "GIL": "Global Interpreter Lock — prevents true multi-threading in CPython. Irrelevant for ML because NumPy/PyTorch release the GIL during heavy computation.",
+            "Virtual Environment": "Isolated Python installation with its own packages. Think of it as a project-scoped runtime (like nvm for Node, but for the entire interpreter + packages).",
+            "Generator": "Lazy iterator that yields values one at a time. Critical for processing datasets that don't fit in memory."
+          },
+          "migration_tips": {
+            "php": "Composer → pip/poetry. `require` → `import`. No `use` statements for namespaces — Python uses modules and packages. `__init__.py` is like a namespace declaration. Forget `$this->` — Python uses `self.` explicitly.",
+            "java": "No `public static void main`. Scripts just run top-to-bottom. Properties/getters → just use attributes directly (Pythonic). `@Override` → no equivalent needed, duck typing handles it. `Optional<T>` → `None` checks or `typing.Optional[T]`.",
+            "nodejs": "No `package.json` scripts — use Makefiles or `pyproject.toml` scripts. `require()` → `import`. Destructuring works differently: `a, b = func()`. `async/await` exists in Python but you'll rarely use it in ML code.",
+            "csharp": "No `namespace` keyword — directory structure IS the namespace. Properties with `{ get; set; }` → `@property` decorator or just public attributes. `using` → `with` statement (context managers). `var` → Python variables are always untyped references."
+          }
+        },
+        {
+          "id": "w2",
+          "week": 2,
+          "title": "NumPy & Linear Algebra Intuition",
+          "objectives": [
+            "Develop intuition for vectors, matrices, and tensor operations",
+            "Master NumPy broadcasting, indexing, and vectorized operations",
+            "Understand why linear algebra is the language of machine learning"
+          ],
+          "tasks": [
+            {
+              "id": "t2-1",
+              "text": "Complete 3Blue1Brown 'Essence of Linear Algebra' series",
+              "done": false
+            },
+            {
+              "id": "t2-2",
+              "text": "Implement matrix multiplication from scratch, then compare with np.dot()",
+              "done": false
+            },
+            {
+              "id": "t2-3",
+              "text": "Practice: broadcasting rules — predict shapes before running code",
+              "done": false
+            },
+            {
+              "id": "t2-4",
+              "text": "Solve 20 exercises from numpy-100 (github.com/rougier/numpy-100)",
+              "done": false
+            },
+            {
+              "id": "t2-5",
+              "text": "Implement a simple linear regression using only NumPy (no sklearn)",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "3Blue1Brown: Essence of Linear Algebra",
+              "url": "https://www.3blue1brown.com/topics/linear-algebra",
+              "type": "video"
+            },
+            {
+              "title": "NumPy 100 Exercises",
+              "url": "https://github.com/rougier/numpy-100",
+              "type": "practice"
+            },
+            {
+              "title": "Mathematics for Machine Learning (Deisenroth)",
+              "url": "https://mml-book.github.io/",
+              "type": "book"
+            },
+            {
+              "title": "MIT 18.065: Matrix Methods in Data Analysis (Strang)",
+              "url": "https://ocw.mit.edu/courses/18-065-matrix-methods-in-data-analysis-signal-processing-and-machine-learning-spring-2018/",
+              "type": "course"
+            },
+            {
+              "title": "fast.ai Computational Linear Algebra (Rachel Thomas)",
+              "url": "https://github.com/fastai/numerical-linear-algebra",
+              "type": "course"
+            },
+            {
+              "title": "Immersive Linear Algebra (Interactive Book)",
+              "url": "http://immersivemath.com/ila/index.html",
+              "type": "interactive"
+            },
+            {
+              "title": "No Bullshit Guide to Linear Algebra (Ivan Savov)",
+              "url": "https://nobsmath.com/",
+              "type": "book"
+            }
+          ],
+          "terminology": {
+            "Tensor": "An n-dimensional array. Scalar=0D, Vector=1D, Matrix=2D, and beyond. The fundamental data structure in ML.",
+            "Broadcasting": "NumPy's rules for performing operations on arrays of different shapes. Eliminates explicit loops. Think of it as implicit shape expansion.",
+            "Vectorization": "Replacing explicit Python loops with array operations that execute in compiled C. 100-1000x speedup over naive Python loops.",
+            "Dot Product": "Element-wise multiplication followed by summation. The core operation in neural networks — it's how a neuron computes its activation."
+          },
+          "migration_tips": {
+            "php": "`array_map()` on a PHP array is O(n) in interpreted PHP. NumPy's vectorized `arr * 2` runs at C speed on contiguous memory. This single difference explains why Python dominates ML. PHP's `array` is a hash map internally; NumPy arrays are C-style typed arrays.",
+            "java": "`double[][]` in Java is an array of pointers to arrays (non-contiguous). NumPy `ndarray` is a single contiguous memory block with stride metadata. This is why NumPy is fast. Java streams `.map().filter()` → NumPy boolean indexing `arr[arr > 0]`.",
+            "nodejs": "Forget `Array.prototype.map/filter/reduce` for numerical work — they're orders of magnitude slower than NumPy. `Buffer` is the closest Node concept to typed arrays, but NumPy adds n-dimensional shape, broadcasting, and BLAS-backed linear algebra.",
+            "csharp": "`Span<T>` and `Memory<T>` are conceptually close to NumPy's memory model (contiguous, typed). LINQ's `.Select()` → `np.vectorize()` (but prefer native broadcasting). `System.Numerics.Matrix4x4` covers 4x4 only; NumPy handles arbitrary dimensions."
+          }
+        },
+        {
+          "id": "w3",
+          "week": 3,
+          "title": "Pandas, Data Wrangling & EDA",
+          "objectives": [
+            "Master Pandas DataFrames for data manipulation and cleaning",
+            "Learn Exploratory Data Analysis (EDA) workflows",
+            "Understand the data pipeline that feeds ML models"
+          ],
+          "tasks": [
+            {
+              "id": "t3-1",
+              "text": "Load, inspect, clean, and transform a real-world dataset (Kaggle)",
+              "done": false
+            },
+            {
+              "id": "t3-2",
+              "text": "Practice: groupby, merge, pivot_table, and window functions in Pandas",
+              "done": false
+            },
+            {
+              "id": "t3-3",
+              "text": "Create statistical visualizations with matplotlib and seaborn",
+              "done": false
+            },
+            {
+              "id": "t3-4",
+              "text": "Handle missing data: imputation strategies and their trade-offs",
+              "done": false
+            },
+            {
+              "id": "t3-5",
+              "text": "Build an EDA notebook for a text dataset (preview for NLP work)",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Python for Data Analysis, 3rd Ed (Wes McKinney)",
+              "url": "https://wesmckinney.com/book/",
+              "type": "book"
+            },
+            {
+              "title": "Kaggle Learn: Pandas",
+              "url": "https://www.kaggle.com/learn/pandas",
+              "type": "course"
+            },
+            {
+              "title": "Pandas Documentation",
+              "url": "https://pandas.pydata.org/docs/",
+              "type": "docs"
+            }
+          ],
+          "terminology": {
+            "DataFrame": "A 2D labeled data structure with columns of potentially different types. Think of it as a SQL table or a spreadsheet in memory.",
+            "EDA": "Exploratory Data Analysis — the process of visually and statistically summarizing a dataset before modeling. Never skip this.",
+            "Feature Engineering": "Creating new input columns from raw data to improve model performance. Often more impactful than model architecture changes."
+          },
+          "migration_tips": {
+            "php": "Think of a DataFrame as a SQL result set you can manipulate without writing SQL. `$pdo->query()` → `pd.read_sql()`. Laravel Collections' `->map()->filter()->groupBy()` chains → Pandas method chaining with `.pipe()`. But DataFrames are column-oriented, not row-oriented.",
+            "java": "Java Streams on `List<Map<String, Object>>` is the closest analog, but Pandas is purpose-built for tabular data. No need for POJOs — DataFrames are schema-flexible. `ResultSet` iteration → `pd.read_sql()` returns a full DataFrame in one call.",
+            "nodejs": "If you've used Lodash's `_.groupBy()` / `_.sortBy()`, Pandas does the same but on typed columnar data with millions of rows. No JS library matches Pandas' ergonomics. `csv-parse` → `pd.read_csv()` (handles encoding, types, dates automatically).",
+            "csharp": "Entity Framework's `DbSet<T>` with LINQ → Pandas DataFrame. `.Where()` → `df[df['col'] > 0]`. `.GroupBy()` → `df.groupby()`. `.Select()` → `df['col'].apply()`. The mental model maps cleanly, but Pandas is more interactive (REPL-driven)."
+          }
+        },
+        {
+          "id": "w4",
+          "week": 4,
+          "title": "Calculus Intuition & Gradient Descent",
+          "objectives": [
+            "Build intuition for derivatives, partial derivatives, and the chain rule",
+            "Implement gradient descent from scratch in NumPy",
+            "Understand why calculus is the engine of neural network training"
+          ],
+          "tasks": [
+            {
+              "id": "t4-1",
+              "text": "Watch 3Blue1Brown 'Essence of Calculus' (focus on chain rule)",
+              "done": false
+            },
+            {
+              "id": "t4-2",
+              "text": "Implement gradient descent for linear regression from scratch",
+              "done": false
+            },
+            {
+              "id": "t4-3",
+              "text": "Visualize loss landscapes and gradient trajectories with matplotlib",
+              "done": false
+            },
+            {
+              "id": "t4-4",
+              "text": "Implement SGD, Mini-batch GD, and compare convergence",
+              "done": false
+            },
+            {
+              "id": "t4-5",
+              "text": "Derive and implement the gradient for logistic regression",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "3Blue1Brown: Essence of Calculus",
+              "url": "https://www.3blue1brown.com/topics/calculus",
+              "type": "video"
+            },
+            {
+              "title": "Stanford CS229 Lecture Notes",
+              "url": "https://cs229.stanford.edu/",
+              "type": "course"
+            },
+            {
+              "title": "The Matrix Calculus You Need For Deep Learning",
+              "url": "https://arxiv.org/abs/1802.01528",
+              "type": "paper"
+            },
+            {
+              "title": "Matrix Calculus for Deep Learning (Parr & Howard)",
+              "url": "https://explained.ai/matrix-calculus/",
+              "type": "blog"
+            },
+            {
+              "title": "Coursera: Mathematics for ML — Multivariate Calculus (Imperial College)",
+              "url": "https://www.coursera.org/learn/multivariate-calculus-machine-learning",
+              "type": "course"
+            },
+            {
+              "title": "Distill.pub: Why Momentum Really Works",
+              "url": "https://distill.pub/2017/momentum/",
+              "type": "interactive"
+            },
+            {
+              "title": "Sebastian Ruder: Overview of Gradient Descent Optimization Algorithms",
+              "url": "https://ruder.io/optimizing-gradient-descent/",
+              "type": "blog"
+            }
+          ],
+          "terminology": {
+            "Gradient": "A vector of partial derivatives pointing in the direction of steepest increase. We go OPPOSITE to the gradient to minimize loss.",
+            "Learning Rate": "Step size for gradient descent. Too large → diverge. Too small → never converge. The most important hyperparameter.",
+            "Loss Function": "A function measuring how wrong the model's predictions are. Training = minimizing this function.",
+            "Backpropagation": "Applying the chain rule recursively to compute gradients through the network. Not magic — just calculus."
+          },
+          "migration_tips": {
+            "php": "If you've never used calculus professionally, don't panic. You need INTUITION, not proof-writing ability. Think of the gradient as a 'code review' that tells each parameter how to change. Training a model is like running an optimization loop — not unlike iterating on a deploy pipeline until metrics improve.",
+            "java": "The chain rule is function composition in reverse. If `f(g(x))`, the derivative is `f'(g(x)) * g'(x)`. Think of it as unwinding a call stack. Java's strong math libraries (Apache Commons Math) can help you prototype, but NumPy is the standard.",
+            "nodejs": "There's no npm package that replaces understanding gradients. The backprop algorithm is essentially: compute output, measure error, propagate blame backwards through each layer. It's like a reverse middleware chain where each layer adjusts based on the final error.",
+            "csharp": "If you've done numerical methods or physics simulations in C#, the concepts transfer directly. Gradient descent is Newton's method simplified. ML.NET hides all of this — here you're learning what's underneath."
+          }
+        },
+        {
+          "id": "w5",
+          "week": 5,
+          "title": "Neural Networks from Scratch",
+          "objectives": [
+            "Build a complete neural network using only NumPy",
+            "Implement forward pass, backward pass, and weight updates manually",
+            "Understand every component before using frameworks"
+          ],
+          "tasks": [
+            {
+              "id": "t5-1",
+              "text": "Implement a single neuron (perceptron) with sigmoid activation",
+              "done": false
+            },
+            {
+              "id": "t5-2",
+              "text": "Build a 2-layer neural network for binary classification",
+              "done": false
+            },
+            {
+              "id": "t5-3",
+              "text": "Implement backpropagation manually with matrix calculus",
+              "done": false
+            },
+            {
+              "id": "t5-4",
+              "text": "Train your network on MNIST (achieve >90% accuracy)",
+              "done": false
+            },
+            {
+              "id": "t5-5",
+              "text": "Add batch normalization and dropout from scratch",
+              "done": false
+            },
+            {
+              "id": "t5-6",
+              "text": "Compare your implementation's speed with PyTorch equivalent",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Neural Networks and Deep Learning (Michael Nielsen)",
+              "url": "http://neuralnetworksanddeeplearning.com/",
+              "type": "book"
+            },
+            {
+              "title": "Andrej Karpathy: Neural Networks Zero to Hero",
+              "url": "https://karpathy.ai/zero-to-hero.html",
+              "type": "video"
+            },
+            {
+              "title": "fast.ai: Practical Deep Learning",
+              "url": "https://course.fast.ai/",
+              "type": "course"
+            },
+            {
+              "title": "Deep Learning (Goodfellow, Bengio, Courville) — FREE online",
+              "url": "https://www.deeplearningbook.org/",
+              "type": "book"
+            },
+            {
+              "title": "Hands-On Machine Learning, 3rd Ed (Aurélien Géron)",
+              "url": "https://www.oreilly.com/library/view/hands-on-machine-learning/9781098125967/",
+              "type": "book"
+            }
+          ],
+          "terminology": {
+            "Activation Function": "Non-linear function applied after the linear transformation in each neuron. Without it, stacking layers is pointless (linear(linear(x)) = linear(x)).",
+            "Epoch": "One complete pass through the entire training dataset.",
+            "Batch Size": "Number of samples processed before updating weights. Affects memory usage, training speed, and generalization.",
+            "Overfitting": "Model memorizes training data instead of learning patterns. Like writing code that only passes existing tests but fails on new inputs."
+          },
+          "migration_tips": {
+            "php": "Building a neural net from scratch is like building a framework from scratch — you'll understand Laravel/Symfony so much deeper. The forward pass is a pipeline of transformations (middleware). The backward pass is like rolling back a transaction, adjusting each step.",
+            "java": "Resist the urge to create `Neuron`, `Layer`, `Network` classes with interfaces. For learning, keep it functional — matrices in, matrices out. You can OOP-ify it later. Focus on the math, not the architecture.",
+            "nodejs": "This is the equivalent of understanding the V8 event loop before using Node. Building from scratch removes the magic. No `npm install neural-network` shortcut here — and that's the point.",
+            "csharp": "Think of each layer as a `Func<Matrix, Matrix>`. The forward pass is function composition. The backward pass is computing the Jacobian at each step. If you've used `System.Numerics`, the matrix operations will feel familiar."
+          }
+        },
+        {
+          "id": "w6",
+          "week": 6,
+          "title": "Probability, Statistics & ML Fundamentals",
+          "objectives": [
+            "Build statistical intuition for ML concepts",
+            "Understand Bayes' theorem, distributions, and information theory basics",
+            "Bridge classical ML concepts to deep learning"
+          ],
+          "tasks": [
+            {
+              "id": "t6-1",
+              "text": "Implement Naive Bayes classifier from scratch",
+              "done": false
+            },
+            {
+              "id": "t6-2",
+              "text": "Study cross-entropy loss derivation and its connection to KL divergence",
+              "done": false
+            },
+            {
+              "id": "t6-3",
+              "text": "Implement k-means clustering and visualize decision boundaries",
+              "done": false
+            },
+            {
+              "id": "t6-4",
+              "text": "Build a decision tree and understand information gain",
+              "done": false
+            },
+            {
+              "id": "t6-5",
+              "text": "Complete sklearn's classification tutorial, then reimplement without sklearn",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "StatQuest (Josh Starmer YouTube)",
+              "url": "https://www.youtube.com/@statquest",
+              "type": "video"
+            },
+            {
+              "title": "An Introduction to Statistical Learning (ISLR)",
+              "url": "https://www.statlearning.com/",
+              "type": "book"
+            },
+            {
+              "title": "Seeing Theory: Visual Probability & Statistics",
+              "url": "https://seeing-theory.brown.edu/",
+              "type": "interactive"
+            },
+            {
+              "title": "Harvard Stat 110: Probability (Joe Blitzstein)",
+              "url": "https://projects.iq.harvard.edu/stat110/home",
+              "type": "course"
+            },
+            {
+              "title": "Think Bayes, 2nd Ed (Allen Downey) — FREE online",
+              "url": "https://allendowney.github.io/ThinkBayes2/",
+              "type": "book"
+            },
+            {
+              "title": "Visual Information Theory (Chris Olah)",
+              "url": "https://colah.github.io/posts/2015-09-Visual-Information/",
+              "type": "blog"
+            },
+            {
+              "title": "Pattern Recognition and Machine Learning (Bishop) — FREE PDF",
+              "url": "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/",
+              "type": "book"
+            }
+          ],
+          "terminology": {
+            "Bayes' Theorem": "P(A|B) = P(B|A) * P(A) / P(B). Updating beliefs with evidence. The foundation of probabilistic ML.",
+            "Cross-Entropy": "Loss function for classification. Measures the difference between predicted probability distribution and true distribution.",
+            "KL Divergence": "Measures how one probability distribution differs from another. Cross-entropy = entropy + KL divergence.",
+            "Softmax": "Converts a vector of raw scores into a probability distribution. The standard output for multi-class classification."
+          },
+          "migration_tips": {
+            "php": "Probability in ML is like A/B testing on steroids. If you've used statistical significance in feature flags or conversion optimization, you already have the intuition. Bayes' theorem is just updating your confidence as new data arrives — like a spam filter.",
+            "java": "If you've worked with Apache Commons Math or Weka, some concepts will be familiar. The key shift: in classical software you write rules; in ML you learn rules from data. `if/else` → decision boundaries learned from examples.",
+            "nodejs": "Statistical thinking is rare in the Node ecosystem. This is your biggest conceptual leap. Start with StatQuest videos — they explain complex concepts with zero jargon. Think of probability distributions as the 'type system' of ML.",
+            "csharp": "ML.NET uses many of these algorithms under the hood. Now you're learning what `BinaryClassificationTrainer` actually does internally. If you've used Accord.NET, the concept mapping is direct."
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "title": "Architecture Deep Dive",
+      "description": "PyTorch mastery, Transformer architecture from paper to code, and the Attention mechanism that changed everything.",
+      "weeks": "7–12",
+      "color": "#8b5cf6",
+      "migration_tips": {
+        "php": "You're now entering the 'framework' phase — PyTorch is to ML what Symfony is to PHP, but with a radically different paradigm. Instead of HTTP request/response, think tensor-in/tensor-out. Models are stateful objects that learn, not stateless controllers.",
+        "java": "PyTorch's dynamic computation graph will feel liberating after static Java. It's like going from compiled languages to interpreted — you can inspect everything at runtime. The `nn.Module` pattern is basically OOP done right for ML.",
+        "nodejs": "The Transformer architecture processes sequences — think of it as a stateless function that can look at any part of the input simultaneously, unlike RNNs which process sequentially (like a stream). Attention is the key innovation.",
+        "csharp": "PyTorch's `nn.Module` is similar to C# classes with composition. Forward pass = method that processes input. Parameters are tracked automatically like dependency injection, but for weights."
+      },
+      "weeks_detail": [
+        {
+          "id": "w7",
+          "week": 7,
+          "title": "PyTorch Fundamentals",
+          "objectives": [
+            "Master PyTorch tensor operations and autograd",
+            "Build and train models using nn.Module",
+            "Understand computational graphs and automatic differentiation"
+          ],
+          "tasks": [
+            {
+              "id": "t7-1",
+              "text": "Port your NumPy neural network to PyTorch, compare code complexity",
+              "done": false
+            },
+            {
+              "id": "t7-2",
+              "text": "Master tensor operations: reshape, view, permute, einsum",
+              "done": false
+            },
+            {
+              "id": "t7-3",
+              "text": "Use autograd: compute gradients automatically, verify against manual computation",
+              "done": false
+            },
+            {
+              "id": "t7-4",
+              "text": "Build a CNN for image classification using nn.Module",
+              "done": false
+            },
+            {
+              "id": "t7-5",
+              "text": "Implement custom Dataset and DataLoader for a real dataset",
+              "done": false
+            },
+            {
+              "id": "t7-6",
+              "text": "Profile GPU vs CPU training with torch.cuda",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "PyTorch Official Tutorials",
+              "url": "https://pytorch.org/tutorials/",
+              "type": "docs"
+            },
+            {
+              "title": "Deep Learning with PyTorch (Stevens, Antiga)",
+              "url": "https://www.manning.com/books/deep-learning-with-pytorch",
+              "type": "book"
+            },
+            {
+              "title": "Andrej Karpathy: micrograd",
+              "url": "https://github.com/karpathy/micrograd",
+              "type": "code"
+            }
+          ],
+          "terminology": {
+            "Autograd": "PyTorch's automatic differentiation engine. Records operations on tensors and computes gradients via backpropagation. Replaces manual gradient computation.",
+            "Computational Graph": "A DAG recording tensor operations. Built dynamically in PyTorch (define-by-run). Enables automatic gradient computation.",
+            "nn.Module": "Base class for all neural network components in PyTorch. Tracks parameters, provides forward() method, and supports nesting.",
+            "DataLoader": "Iterator that batches, shuffles, and parallelizes data loading. Handles the 'plumbing' between your dataset and training loop."
+          },
+          "migration_tips": {
+            "php": "`nn.Module` is like a Symfony service with `__invoke()`. You define the architecture in `__init__()` and the computation in `forward()`. PyTorch's ecosystem is more coherent than PHP's — one framework dominates.",
+            "java": "`nn.Module` is your `class extends AbstractModel`. But no interfaces needed — Python's duck typing means any callable works. `DataLoader` is like Java's `Iterator` + `ExecutorService` for parallel data loading.",
+            "nodejs": "Think of `nn.Module` as a class component in React — it has state (weights) and a render method (`forward()`). `DataLoader` is like a readable stream with built-in batching and shuffling.",
+            "csharp": "`nn.Module` ≈ a class implementing `IForwardPass`. `DataLoader` ≈ `IAsyncEnumerable<Batch>`. PyTorch's `optim` package ≈ strategy pattern for optimization algorithms. The composition model is clean."
+          }
+        },
+        {
+          "id": "w8",
+          "week": 8,
+          "title": "Recurrent Networks & Sequence Modeling",
+          "objectives": [
+            "Understand RNNs, LSTMs, and their limitations",
+            "Implement sequence-to-sequence models",
+            "Appreciate why Transformers replaced recurrent architectures"
+          ],
+          "tasks": [
+            {
+              "id": "t8-1",
+              "text": "Implement a character-level RNN language model (Karpathy style)",
+              "done": false
+            },
+            {
+              "id": "t8-2",
+              "text": "Build an LSTM and understand the gate mechanism",
+              "done": false
+            },
+            {
+              "id": "t8-3",
+              "text": "Train a seq2seq model for simple translation",
+              "done": false
+            },
+            {
+              "id": "t8-4",
+              "text": "Observe and document the vanishing gradient problem",
+              "done": false
+            },
+            {
+              "id": "t8-5",
+              "text": "Measure inference time: O(n) sequential nature of RNNs",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Karpathy: The Unreasonable Effectiveness of RNNs",
+              "url": "https://karpathy.github.io/2015/05/21/rnn-effectiveness/",
+              "type": "blog"
+            },
+            {
+              "title": "Understanding LSTM Networks (Chris Olah)",
+              "url": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/",
+              "type": "blog"
+            },
+            {
+              "title": "Sequence Models (deeplearning.ai)",
+              "url": "https://www.coursera.org/learn/nlp-sequence-models",
+              "type": "course"
+            }
+          ],
+          "terminology": {
+            "RNN": "Recurrent Neural Network — processes sequences step-by-step, maintaining hidden state. Like a for-loop over time steps.",
+            "LSTM": "Long Short-Term Memory — RNN variant with gates that control information flow, solving the vanishing gradient problem.",
+            "Vanishing Gradient": "Gradients shrink exponentially through many layers/timesteps, preventing learning of long-range dependencies.",
+            "Seq2Seq": "Encoder-decoder architecture: compress input sequence into a vector, then decode to output sequence. Pre-Transformer standard for translation."
+          },
+          "migration_tips": {
+            "php": "RNNs process data like a foreach loop with state carried between iterations. `$hidden = processStep($input, $hidden)`. The problem: if the loop is 1000 iterations long, early information gets lost. This is why Transformers won.",
+            "java": "Think of an RNN as a `Stream.reduce()` where the accumulator is the hidden state. LSTMs add gates (think `if` conditions) to control what the accumulator remembers and forgets. The sequential nature means no parallelization — a fundamental limit.",
+            "nodejs": "RNNs are like processing a stream one chunk at a time, passing state between chunks. The sequential constraint is why they're slow — you can't parallelize. Transformers fix this by looking at all positions simultaneously (like `Promise.all()` vs sequential `await`).",
+            "csharp": "RNN ≈ `Aggregate()` in LINQ where the accumulator carries hidden state. LSTM adds gating: `shouldForget ? reset : keep`. The key limitation is sequential processing — Transformers parallelize this entirely."
+          }
+        },
+        {
+          "id": "w9",
+          "week": 9,
+          "title": "Attention Mechanism Deep Dive",
+          "objectives": [
+            "Understand attention from first principles",
+            "Implement scaled dot-product attention from scratch",
+            "Build multi-head attention and understand why it works"
+          ],
+          "tasks": [
+            {
+              "id": "t9-1",
+              "text": "Implement dot-product attention in NumPy, visualize attention weights",
+              "done": false
+            },
+            {
+              "id": "t9-2",
+              "text": "Implement scaled dot-product attention in PyTorch",
+              "done": false
+            },
+            {
+              "id": "t9-3",
+              "text": "Build multi-head attention from scratch",
+              "done": false
+            },
+            {
+              "id": "t9-4",
+              "text": "Visualize attention patterns on simple sequences",
+              "done": false
+            },
+            {
+              "id": "t9-5",
+              "text": "Implement causal (masked) attention for autoregressive models",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Attention Is All You Need (Original Paper)",
+              "url": "https://arxiv.org/abs/1706.03762",
+              "type": "paper"
+            },
+            {
+              "title": "The Illustrated Transformer (Jay Alammar)",
+              "url": "https://jalammar.github.io/illustrated-transformer/",
+              "type": "blog"
+            },
+            {
+              "title": "Attention in transformers, visually explained (3Blue1Brown)",
+              "url": "https://www.youtube.com/watch?v=eMlx5fFNoYc",
+              "type": "video"
+            }
+          ],
+          "terminology": {
+            "Query/Key/Value": "Three projections of the input. Query asks 'what am I looking for?', Key says 'what do I contain?', Value says 'what do I provide?'. Attention score = similarity(Q, K), output = weighted sum of V.",
+            "Scaled Dot-Product": "attention(Q,K,V) = softmax(QK^T / √d_k) V. The √d_k scaling prevents softmax saturation in high dimensions.",
+            "Multi-Head Attention": "Run attention multiple times in parallel with different learned projections. Each head can learn different relationship types.",
+            "Causal Mask": "A triangular mask that prevents attending to future positions. Required for autoregressive (left-to-right) generation."
+          },
+          "migration_tips": {
+            "php": "Attention is like a database JOIN that's learned, not coded. Instead of writing `WHERE id = ?`, the model learns which 'rows' are relevant. Multi-head attention is like running multiple different queries in parallel.",
+            "java": "Think of attention as a `HashMap` lookup where both the hash function and the values are learned. Multi-head attention ≈ running N `CompletableFuture` lookups with different hash functions, then concatenating results.",
+            "nodejs": "Attention is like a dynamic import — instead of statically requiring modules, the model dynamically decides which parts of the input are relevant. Each 'head' in multi-head attention is like a different lens/filter on the same data.",
+            "csharp": "Q·K^T is like a LINQ `.Join()` where the join condition is cosine similarity. Multi-head ≈ running N parallel queries with different projections and `.Concat()` the results. The softmax is a probability-weighted `.Aggregate()`."
+          }
+        },
+        {
+          "id": "w10",
+          "week": 10,
+          "title": "Transformer Architecture from Scratch",
+          "objectives": [
+            "Implement a complete Transformer encoder-decoder",
+            "Understand positional encoding, layer normalization, residual connections",
+            "Train a Transformer on a small task end-to-end"
+          ],
+          "tasks": [
+            {
+              "id": "t10-1",
+              "text": "Implement sinusoidal positional encoding",
+              "done": false
+            },
+            {
+              "id": "t10-2",
+              "text": "Build a Transformer encoder block (attention + FFN + LayerNorm + residual)",
+              "done": false
+            },
+            {
+              "id": "t10-3",
+              "text": "Build a Transformer decoder block with cross-attention",
+              "done": false
+            },
+            {
+              "id": "t10-4",
+              "text": "Assemble full encoder-decoder Transformer",
+              "done": false
+            },
+            {
+              "id": "t10-5",
+              "text": "Train on a toy task (sorting, copying, or simple translation)",
+              "done": false
+            },
+            {
+              "id": "t10-6",
+              "text": "Read and annotate 'Attention Is All You Need' paper",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "The Annotated Transformer (Harvard NLP)",
+              "url": "https://nlp.seas.harvard.edu/annotated-transformer/",
+              "type": "code"
+            },
+            {
+              "title": "Andrej Karpathy: Let's build GPT",
+              "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+              "type": "video"
+            },
+            {
+              "title": "Transformer from Scratch (Peter Bloem)",
+              "url": "https://peterbloem.nl/blog/transformers",
+              "type": "blog"
+            },
+            {
+              "title": "Build a Large Language Model From Scratch (Sebastian Raschka)",
+              "url": "https://www.manning.com/books/build-a-large-language-model-from-scratch",
+              "type": "book"
+            },
+            {
+              "title": "Stanford CS224N: NLP with Deep Learning",
+              "url": "https://web.stanford.edu/class/cs224n/",
+              "type": "course"
+            }
+          ],
+          "terminology": {
+            "Positional Encoding": "Injected signal that tells the model about token positions. Transformers have no inherent notion of order (unlike RNNs), so position must be explicitly provided.",
+            "Residual Connection": "Skip connection: output = layer(x) + x. Enables training of very deep networks by providing a gradient highway.",
+            "Layer Normalization": "Normalizes activations across the feature dimension. Stabilizes training by reducing internal covariate shift.",
+            "Feed-Forward Network": "Two linear layers with ReLU/GELU activation between them. The 'thinking' step after attention has gathered information."
+          },
+          "migration_tips": {
+            "php": "The Transformer is a pipeline pattern: Input → Embedding → N × (Attention → FFN) → Output. Each block is a middleware that transforms the data. Residual connections are like keeping the original request object alongside transformations.",
+            "java": "The Transformer is a textbook Decorator/Chain pattern. Each layer wraps the previous output, adds computation, and passes it on. Residual connections ensure the original signal is never lost — like keeping a reference to the original object.",
+            "nodejs": "Think of the Transformer as an Express.js middleware chain where each middleware (layer) can look at the entire request (attention over all positions) before passing to the next. Residual connections = passing `req` through unchanged alongside transformations.",
+            "csharp": "The architecture maps to a Pipeline pattern: `IPipelineStep<Tensor, Tensor>`. Residual connection ≈ `var output = step.Process(input) + input`. Layer norm ≈ `Normalize()` after each step. Very clean in C# terms."
+          }
+        },
+        {
+          "id": "w11",
+          "week": 11,
+          "title": "Pre-trained Models & Hugging Face Ecosystem",
+          "objectives": [
+            "Master the Hugging Face transformers library",
+            "Understand BERT, GPT, and T5 architecture differences",
+            "Learn tokenization, model loading, and inference pipelines"
+          ],
+          "tasks": [
+            {
+              "id": "t11-1",
+              "text": "Use HuggingFace pipeline() for text classification, NER, QA, and generation",
+              "done": false
+            },
+            {
+              "id": "t11-2",
+              "text": "Load and compare BERT (encoder), GPT-2 (decoder), T5 (encoder-decoder)",
+              "done": false
+            },
+            {
+              "id": "t11-3",
+              "text": "Understand BPE, WordPiece, and SentencePiece tokenizers",
+              "done": false
+            },
+            {
+              "id": "t11-4",
+              "text": "Fine-tune a BERT model on a custom classification task",
+              "done": false
+            },
+            {
+              "id": "t11-5",
+              "text": "Explore the HF Hub: model cards, datasets, spaces",
+              "done": false
+            },
+            {
+              "id": "t11-6",
+              "text": "Survey open-source LLM landscape: Llama 3, Mistral, Mixtral, Phi, Gemma, Qwen",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Hugging Face NLP Course",
+              "url": "https://huggingface.co/learn/nlp-course",
+              "type": "course"
+            },
+            {
+              "title": "BERT Paper: Pre-training of Deep Bidirectional Transformers",
+              "url": "https://arxiv.org/abs/1810.04805",
+              "type": "paper"
+            },
+            {
+              "title": "GPT-2 Paper: Language Models are Unsupervised Multitask Learners",
+              "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+              "type": "paper"
+            },
+            {
+              "title": "Natural Language Processing with Transformers (Tunstall et al.)",
+              "url": "https://www.oreilly.com/library/view/natural-language-processing/9781098136789/",
+              "type": "book"
+            },
+            {
+              "title": "LLM University by Cohere",
+              "url": "https://cohere.com/llmu",
+              "type": "course"
+            }
+          ],
+          "terminology": {
+            "BERT": "Bidirectional Encoder Representations from Transformers. Encoder-only model trained with masked language modeling. Best for understanding tasks (classification, NER, QA).",
+            "GPT": "Generative Pre-trained Transformer. Decoder-only, autoregressive. Best for text generation. The architecture behind ChatGPT.",
+            "Tokenizer": "Converts text to integer token IDs and back. Subword tokenization (BPE) handles unknown words by breaking them into known pieces.",
+            "Transfer Learning": "Using a model pre-trained on a large corpus and adapting it to a specific task. The paradigm shift that made modern NLP practical."
+          },
+          "migration_tips": {
+            "php": "HuggingFace Hub is like Packagist, but for models. `from_pretrained('bert-base')` is like `composer require` for a pre-trained brain. Model cards ≈ README.md. Spaces ≈ deployable demos.",
+            "java": "HuggingFace abstracts model loading like Spring Boot auto-configuration — one line to load a pre-trained model. `AutoModel.from_pretrained()` detects architecture automatically. Think of it as DI for neural networks.",
+            "nodejs": "HuggingFace's `pipeline()` is like an npm package with a single-function API — `pipe('sentiment-analysis')('I love this')` returns a result. The JS equivalent (transformers.js) exists but Python is the primary ecosystem.",
+            "csharp": "HuggingFace ≈ a model registry like NuGet Gallery + Azure Model Catalog. `from_pretrained()` ≈ `services.AddSingleton<IModel>(provider => ModelFactory.Load('bert'))`. The `pipeline()` API ≈ high-level abstractions over raw model inference."
+          }
+        },
+        {
+          "id": "w12",
+          "week": 12,
+          "title": "Training at Scale & GPU Computing",
+          "objectives": [
+            "Understand GPU architecture and memory hierarchy",
+            "Master mixed-precision training and gradient accumulation",
+            "Learn distributed training fundamentals"
+          ],
+          "tasks": [
+            {
+              "id": "t12-1",
+              "text": "Profile GPU memory usage during training, identify bottlenecks",
+              "done": false
+            },
+            {
+              "id": "t12-2",
+              "text": "Implement mixed-precision training (FP16/BF16) with torch.cuda.amp",
+              "done": false
+            },
+            {
+              "id": "t12-3",
+              "text": "Use gradient accumulation to simulate larger batch sizes",
+              "done": false
+            },
+            {
+              "id": "t12-4",
+              "text": "Set up experiment tracking with Weights & Biases (wandb)",
+              "done": false
+            },
+            {
+              "id": "t12-5",
+              "text": "Train a model on cloud GPU (Colab, Lambda Labs, or RunPod)",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Efficient Training on a Single GPU (HuggingFace)",
+              "url": "https://huggingface.co/docs/transformers/perf_train_gpu_one",
+              "type": "docs"
+            },
+            {
+              "title": "Mixed Precision Training (NVIDIA)",
+              "url": "https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/",
+              "type": "docs"
+            },
+            {
+              "title": "Weights & Biases Documentation",
+              "url": "https://docs.wandb.ai/",
+              "type": "docs"
+            }
+          ],
+          "terminology": {
+            "Mixed Precision": "Using FP16 for forward/backward pass and FP32 for weight updates. 2x memory savings, faster computation on modern GPUs.",
+            "Gradient Accumulation": "Accumulate gradients over N forward passes before updating weights. Simulates large batch sizes when GPU memory is limited.",
+            "VRAM": "Video RAM — GPU memory. The primary constraint in deep learning. A 7B parameter model needs ~14GB in FP16.",
+            "Weights & Biases": "Experiment tracking platform. Logs metrics, hyperparameters, and artifacts. The 'DataDog for ML experiments'."
+          },
+          "migration_tips": {
+            "php": "GPU computing is like moving from PHP-FPM to Swoole — fundamentally different execution model. CPU processes instructions sequentially; GPU runs thousands of simple operations in parallel. VRAM is your new rate limiter (like PHP's memory_limit, but much more critical).",
+            "java": "Think of GPU cores as a thread pool with 10,000 extremely simple threads. Each thread does basic math. The CUDA programming model is like Java's Fork/Join but at a much lower level. JVM's memory management is automatic; GPU memory you manage explicitly.",
+            "nodejs": "GPU computing is the opposite of Node's philosophy. Node: single-thread, event-driven, I/O-optimized. GPU: thousands of threads, synchronous, compute-optimized. Mixed precision is like using `Float32Array` vs `Float64Array` — half the memory, slightly less precision.",
+            "csharp": "If you've used `Parallel.For` or PLINQ, GPUs take that idea to the extreme: thousands of lightweight threads executing the same operation on different data (SIMD). CUDA ≈ `System.Threading.Tasks` but for GPU. VRAM ≈ a fixed-size `Memory<T>` pool."
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "title": "Fine-Tuning & Dataset Engineering",
+      "description": "LoRA, PEFT, Unsloth, and the art of creating high-quality datasets. Where theory meets practical model customization.",
+      "weeks": "13–17",
+      "color": "#ec4899",
+      "migration_tips": {
+        "php": "Fine-tuning is like customizing a framework — you don't rewrite Laravel, you extend it. LoRA is like writing a plugin that modifies core behavior without touching the source. Dataset engineering is your new 'database schema design' — it determines everything.",
+        "java": "Think of fine-tuning as subclassing a pre-trained model and overriding specific behaviors. LoRA is aspect-oriented programming for neural networks — small, targeted modifications to a large system. Dataset quality is your new 'test coverage'.",
+        "nodejs": "Fine-tuning ≈ monkey-patching a large library for your specific use case, but in a principled way. LoRA ≈ writing a middleware that intercepts and modifies specific weight matrices. Dataset engineering ≈ designing your API contract.",
+        "csharp": "Fine-tuning is like using Extension Methods on a sealed class — you add behavior without modifying the base. LoRA is Decorator pattern applied to weight matrices. Dataset engineering is like designing your Entity Framework schema — it shapes everything downstream."
+      },
+      "weeks_detail": [
+        {
+          "id": "w13",
+          "week": 13,
+          "title": "Transfer Learning & Full Fine-Tuning",
+          "objectives": [
+            "Understand when and why to fine-tune vs. prompt engineering",
+            "Implement full fine-tuning on a downstream task",
+            "Master the HuggingFace Trainer API"
+          ],
+          "tasks": [
+            {
+              "id": "t13-1",
+              "text": "Fine-tune a pre-trained model on a custom text classification dataset",
+              "done": false
+            },
+            {
+              "id": "t13-2",
+              "text": "Use HuggingFace Trainer with custom training arguments",
+              "done": false
+            },
+            {
+              "id": "t13-3",
+              "text": "Implement early stopping, learning rate scheduling, and checkpointing",
+              "done": false
+            },
+            {
+              "id": "t13-4",
+              "text": "Compare fine-tuned model vs. few-shot prompting performance",
+              "done": false
+            },
+            {
+              "id": "t13-5",
+              "text": "Document the decision framework: when to fine-tune vs. prompt vs. RAG",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "HuggingFace Fine-Tuning Tutorial",
+              "url": "https://huggingface.co/docs/transformers/training",
+              "type": "docs"
+            },
+            {
+              "title": "Fine-Tuning LLMs (Sebastian Raschka)",
+              "url": "https://magazine.sebastianraschka.com/p/finetuning-large-language-models",
+              "type": "blog"
+            },
+            {
+              "title": "Practical Natural Language Processing (O'Reilly)",
+              "url": "https://www.oreilly.com/library/view/practical-natural-language/9781492054047/",
+              "type": "book"
+            }
+          ],
+          "terminology": {
+            "Fine-Tuning": "Continuing training on a pre-trained model with task-specific data. All weights are updated. High compute cost but maximum customization.",
+            "Learning Rate Schedule": "Strategy for changing the learning rate during training. Common: warmup + cosine decay. Prevents catastrophic forgetting.",
+            "Catastrophic Forgetting": "When fine-tuning destroys the pre-trained knowledge. Mitigated by low learning rates, warmup, and techniques like LoRA.",
+            "Checkpoint": "Saved model state during training. Enables resuming training and selecting the best-performing epoch."
+          },
+          "migration_tips": {
+            "php": "The Trainer API is like Symfony Console for ML — it handles the boilerplate training loop. You configure it like a YAML config file: set hyperparameters, callbacks, and metrics. `TrainingArguments` ≈ `services.yaml` configuration.",
+            "java": "The Trainer API follows the Builder pattern. `TrainingArguments` ≈ a configuration POJO. Callbacks ≈ event listeners. The Trainer orchestrates the training lifecycle like Spring's application context manages bean lifecycle.",
+            "nodejs": "The Trainer handles the training loop like Express handles HTTP — you define the model and data, it manages the iteration. `TrainingArguments` ≈ Express config. Callbacks ≈ middleware hooks (onEpochEnd, onStepEnd).",
+            "csharp": "Trainer ≈ `IHostedService` for ML. `TrainingArguments` ≈ `IOptions<TrainingConfig>`. Callbacks ≈ `IHostedLifecycleService` lifecycle methods. Checkpointing ≈ `IMemoryCache` persistence to disk."
+          }
+        },
+        {
+          "id": "w14",
+          "week": 14,
+          "title": "LoRA, QLoRA & Parameter-Efficient Fine-Tuning",
+          "objectives": [
+            "Understand the theory behind Low-Rank Adaptation",
+            "Implement LoRA fine-tuning using PEFT library",
+            "Master QLoRA for fine-tuning large models on consumer hardware"
+          ],
+          "tasks": [
+            {
+              "id": "t14-1",
+              "text": "Read the LoRA paper and understand low-rank matrix decomposition",
+              "done": false
+            },
+            {
+              "id": "t14-2",
+              "text": "Fine-tune a 7B model using LoRA (PEFT library)",
+              "done": false
+            },
+            {
+              "id": "t14-3",
+              "text": "Experiment with LoRA hyperparameters: rank, alpha, target modules",
+              "done": false
+            },
+            {
+              "id": "t14-4",
+              "text": "Set up QLoRA with 4-bit quantization (bitsandbytes)",
+              "done": false
+            },
+            {
+              "id": "t14-5",
+              "text": "Compare LoRA vs full fine-tuning: quality, cost, and merge strategies",
+              "done": false
+            },
+            {
+              "id": "t14-6",
+              "text": "Merge LoRA adapters and export a standalone model",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "LoRA Paper: Low-Rank Adaptation of Large Language Models",
+              "url": "https://arxiv.org/abs/2106.09685",
+              "type": "paper"
+            },
+            {
+              "title": "QLoRA Paper",
+              "url": "https://arxiv.org/abs/2305.14314",
+              "type": "paper"
+            },
+            {
+              "title": "PEFT Documentation",
+              "url": "https://huggingface.co/docs/peft",
+              "type": "docs"
+            },
+            {
+              "title": "Unsloth GitHub",
+              "url": "https://github.com/unslothai/unsloth",
+              "type": "code"
+            }
+          ],
+          "terminology": {
+            "LoRA": "Low-Rank Adaptation. Instead of updating all weights, add small trainable matrices (A × B) alongside frozen weights. Reduces trainable parameters by ~99%.",
+            "Rank": "The dimension of the low-rank matrices. Higher rank = more capacity but more parameters. Typical values: 8-64.",
+            "PEFT": "Parameter-Efficient Fine-Tuning library by HuggingFace. Supports LoRA, prefix-tuning, prompt tuning, and more.",
+            "Quantization": "Reducing weight precision (FP32 → INT8 → INT4) to reduce memory. QLoRA combines 4-bit quantization with LoRA for efficient fine-tuning."
+          },
+          "migration_tips": {
+            "php": "LoRA is like writing a Symfony bundle that modifies framework behavior through event listeners — the core is frozen, your adapter is tiny but targeted. You're not forking Laravel; you're writing a service provider that surgically changes what you need.",
+            "java": "LoRA is AspectJ for neural networks — cross-cutting concerns (task adaptation) applied to specific join points (weight matrices) without modifying the base class. The rank is like choosing how many aspects to apply.",
+            "nodejs": "LoRA ≈ writing a small Express middleware that intercepts specific route handlers. You don't rewrite the framework; you add a lightweight layer that modifies behavior. The LoRA adapter file is tiny (~100MB vs 14GB for the full model).",
+            "csharp": "LoRA ≈ applying the Decorator pattern to specific weight matrices. `new LoRALayer(frozenLayer, rank: 16)`. The frozen weights are `readonly`, LoRA adds trainable `A` and `B` matrices. Merging ≈ `sealed` — bake the decoration into the base."
+          }
+        },
+        {
+          "id": "w15",
+          "week": 15,
+          "title": "Unsloth & Efficient Training Frameworks",
+          "objectives": [
+            "Use Unsloth for 2-5x faster fine-tuning",
+            "Understand kernel optimization and Flash Attention",
+            "Master efficient training workflows for real-world projects"
+          ],
+          "tasks": [
+            {
+              "id": "t15-1",
+              "text": "Set up Unsloth and fine-tune a model 2-5x faster than baseline",
+              "done": false
+            },
+            {
+              "id": "t15-2",
+              "text": "Understand Flash Attention and its memory/speed tradeoffs",
+              "done": false
+            },
+            {
+              "id": "t15-3",
+              "text": "Compare training throughput: HuggingFace Trainer vs Unsloth vs Axolotl",
+              "done": false
+            },
+            {
+              "id": "t15-4",
+              "text": "Export models to GGUF format for local inference",
+              "done": false
+            },
+            {
+              "id": "t15-5",
+              "text": "Set up a complete fine-tuning pipeline: data → train → eval → export",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Unsloth Documentation",
+              "url": "https://github.com/unslothai/unsloth",
+              "type": "docs"
+            },
+            {
+              "title": "Flash Attention Paper",
+              "url": "https://arxiv.org/abs/2205.14135",
+              "type": "paper"
+            },
+            {
+              "title": "Axolotl: Fine-tuning Framework",
+              "url": "https://github.com/OpenAccess-AI-Collective/axolotl",
+              "type": "code"
+            }
+          ],
+          "terminology": {
+            "Flash Attention": "IO-aware attention algorithm that reduces memory from O(n²) to O(n) by tiling computation and avoiding materializing the full attention matrix.",
+            "GGUF": "GPT-Generated Unified Format. Quantized model format for efficient CPU/GPU inference with llama.cpp.",
+            "Unsloth": "Training framework with custom CUDA kernels for 2-5x faster LoRA/QLoRA fine-tuning with 80% less memory.",
+            "Throughput": "Tokens processed per second during training. The metric that determines training cost."
+          },
+          "migration_tips": {
+            "php": "Unsloth is like using Swoole over PHP-FPM — same interface, dramatically better performance through lower-level optimizations. GGUF export ≈ compiling PHP to a binary with RoadRunner. You trade flexibility for speed.",
+            "java": "Unsloth optimizes at the kernel level, like JIT compilation in the JVM. Flash Attention ≈ GC optimization — manages memory access patterns for performance. GGUF ≈ GraalVM native-image — ahead-of-time compilation for inference.",
+            "nodejs": "Flash Attention is like optimizing your Node.js app by reducing garbage collection pressure and improving cache locality. Unsloth ≈ using a C++ addon instead of pure JS for the hot path. GGUF ≈ bundling into a single binary.",
+            "csharp": "Flash Attention ≈ using `Span<T>` instead of `T[]` — same computation, better memory access patterns. Unsloth ≈ using SIMD intrinsics (`System.Runtime.Intrinsics`) for hot loops. GGUF ≈ NativeAOT compilation."
+          }
+        },
+        {
+          "id": "w16",
+          "week": 16,
+          "title": "Dataset Engineering & Curation",
+          "objectives": [
+            "Learn to create high-quality instruction-following datasets",
+            "Understand data formats: Alpaca, ShareGPT, ChatML",
+            "Master synthetic data generation and data cleaning pipelines"
+          ],
+          "tasks": [
+            {
+              "id": "t16-1",
+              "text": "Create an instruction dataset in Alpaca format (500+ examples)",
+              "done": false
+            },
+            {
+              "id": "t16-2",
+              "text": "Use an LLM to generate synthetic training data with quality filters",
+              "done": false
+            },
+            {
+              "id": "t16-3",
+              "text": "Implement data deduplication and quality scoring",
+              "done": false
+            },
+            {
+              "id": "t16-4",
+              "text": "Convert between Alpaca, ShareGPT, and ChatML formats",
+              "done": false
+            },
+            {
+              "id": "t16-5",
+              "text": "Fine-tune a model on your curated dataset and evaluate quality",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "LIMA: Less Is More for Alignment",
+              "url": "https://arxiv.org/abs/2305.11206",
+              "type": "paper"
+            },
+            {
+              "title": "Alpaca Dataset Format Guide",
+              "url": "https://github.com/tatsu-lab/stanford_alpaca",
+              "type": "code"
+            },
+            {
+              "title": "Argilla: Data Curation Platform",
+              "url": "https://argilla.io/",
+              "type": "tool"
+            }
+          ],
+          "terminology": {
+            "Alpaca Format": "JSON with instruction/input/output fields. The standard format for instruction-tuning datasets.",
+            "ShareGPT Format": "Multi-turn conversation format. Each entry has alternating human/assistant messages.",
+            "ChatML": "Chat Markup Language. OpenAI's format using <|im_start|> tokens to delimit roles and messages.",
+            "Synthetic Data": "Training data generated by LLMs. Can scale data creation but requires careful quality control to avoid model collapse."
+          },
+          "migration_tips": {
+            "php": "Dataset engineering is your new database design. Schema matters as much as content. Think of each training example as a row in a carefully designed table. Data quality > data quantity, just like in any database. Garbage in = garbage model out.",
+            "java": "Creating training datasets is like writing comprehensive test fixtures. Each example must be correct, diverse, and representative. Synthetic data generation ≈ property-based testing with QuickCheck — generate variations, then filter for quality.",
+            "nodejs": "Think of dataset creation as designing an API contract. The format (Alpaca/ChatML) is the schema. Each example is a request/response pair. You're essentially writing the test cases that define the model's behavior.",
+            "csharp": "Dataset engineering ≈ seed data for Entity Framework migrations, but it determines model behavior. Quality scoring ≈ validation attributes on your data models. Deduplication ≈ implementing `IEqualityComparer<TrainingSample>`."
+          }
+        },
+        {
+          "id": "w17",
+          "week": 17,
+          "title": "Alignment & RLHF/DPO",
+          "objectives": [
+            "Understand alignment techniques: RLHF, DPO, and their tradeoffs",
+            "Implement preference-based fine-tuning with DPO",
+            "Learn safety and alignment evaluation"
+          ],
+          "tasks": [
+            {
+              "id": "t17-1",
+              "text": "Study the RLHF pipeline: SFT → Reward Model → PPO",
+              "done": false
+            },
+            {
+              "id": "t17-2",
+              "text": "Implement DPO fine-tuning using TRL library",
+              "done": false
+            },
+            {
+              "id": "t17-3",
+              "text": "Create a preference dataset (chosen vs rejected responses)",
+              "done": false
+            },
+            {
+              "id": "t17-4",
+              "text": "Evaluate aligned model vs base model on helpfulness and safety",
+              "done": false
+            },
+            {
+              "id": "t17-5",
+              "text": "Study constitutional AI and self-improvement techniques",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "RLHF Blog (HuggingFace)",
+              "url": "https://huggingface.co/blog/rlhf",
+              "type": "blog"
+            },
+            {
+              "title": "DPO Paper: Direct Preference Optimization",
+              "url": "https://arxiv.org/abs/2305.18290",
+              "type": "paper"
+            },
+            {
+              "title": "TRL: Transformer Reinforcement Learning",
+              "url": "https://huggingface.co/docs/trl",
+              "type": "docs"
+            }
+          ],
+          "terminology": {
+            "RLHF": "Reinforcement Learning from Human Feedback. Train a reward model on human preferences, then optimize the LLM using PPO. How ChatGPT was aligned.",
+            "DPO": "Direct Preference Optimization. Skips the reward model — directly fine-tunes on preference pairs. Simpler, more stable, increasingly preferred over RLHF.",
+            "Alignment": "Making models behave helpfully, honestly, and harmlessly. The bridge between a capable model and a useful product.",
+            "PPO": "Proximal Policy Optimization. RL algorithm used in RLHF. Complex to implement correctly — DPO is the simpler alternative."
+          },
+          "migration_tips": {
+            "php": "RLHF is like user acceptance testing for AI. You gather preferences ('this response is better than that one') and use them to improve the model. DPO simplifies this to a loss function — no reward model needed. Think of it as A/B testing baked into training.",
+            "java": "DPO's preference pairs are like `Comparable<T>.compareTo()` — you're not scoring absolutely, just saying 'A is better than B'. The model learns the ranking function implicitly. RLHF adds a separate reward model (like a `Scorer` interface).",
+            "nodejs": "Alignment is UX for AI. RLHF/DPO = iterating on user feedback, just like you'd iterate on a UI. DPO is simpler: just pairs of (good response, bad response) for the same prompt. No reinforcement learning complexity.",
+            "csharp": "DPO ≈ training with `IComparer<Response>` — the model learns to produce outputs that would rank higher. RLHF ≈ training a separate `IScorer<Response>` first, then using it as a reward signal. DPO is increasingly preferred for simplicity."
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "title": "Production Engineering",
+      "description": "RAG systems, vector databases, model serving, and evaluation. Building production-grade LLM applications.",
+      "weeks": "18–22",
+      "color": "#f59e0b",
+      "migration_tips": {
+        "php": "Welcome back to familiar territory — building production systems! RAG is essentially: receive query → search relevant documents → feed them to the LLM → return response. It's an API with a smart search layer. Your web engineering skills shine here.",
+        "java": "This phase leverages your production engineering strengths. Vector databases are just another data store. Model serving is another microservice. Evaluation is testing. The patterns are familiar — the tools are new.",
+        "nodejs": "You're building APIs and services again, but with LLMs as the compute layer. RAG is middleware between user queries and model responses. Vector search is a new type of database query. This is where full-stack skills pay off.",
+        "csharp": "Your enterprise engineering background is an asset here. Microservices, API design, database integration, monitoring — all apply. The new elements: vector similarity search, prompt engineering, and LLM-specific evaluation metrics."
+      },
+      "weeks_detail": [
+        {
+          "id": "w18",
+          "week": 18,
+          "title": "Embeddings & Vector Databases",
+          "objectives": [
+            "Understand text embeddings and semantic similarity",
+            "Set up and use vector databases (Chroma, Qdrant, Pinecone)",
+            "Implement efficient similarity search at scale"
+          ],
+          "tasks": [
+            {
+              "id": "t18-1",
+              "text": "Generate embeddings using sentence-transformers and OpenAI API",
+              "done": false
+            },
+            {
+              "id": "t18-2",
+              "text": "Set up ChromaDB locally and index 10,000+ documents",
+              "done": false
+            },
+            {
+              "id": "t18-3",
+              "text": "Implement cosine similarity search and compare with BM25",
+              "done": false
+            },
+            {
+              "id": "t18-4",
+              "text": "Experiment with Qdrant: filtering, payload storage, and hybrid search",
+              "done": false
+            },
+            {
+              "id": "t18-5",
+              "text": "Benchmark: embedding model choice vs retrieval quality",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Sentence Transformers Documentation",
+              "url": "https://www.sbert.net/",
+              "type": "docs"
+            },
+            {
+              "title": "Qdrant Documentation",
+              "url": "https://qdrant.tech/documentation/",
+              "type": "docs"
+            },
+            {
+              "title": "Pinecone Learning Center",
+              "url": "https://www.pinecone.io/learn/",
+              "type": "course"
+            }
+          ],
+          "terminology": {
+            "Embedding": "A dense vector representation of text where semantic similarity = vector proximity. 'king' and 'queen' are close in embedding space.",
+            "Vector Database": "Database optimized for approximate nearest neighbor (ANN) search in high-dimensional space. The retrieval backbone of RAG systems.",
+            "Cosine Similarity": "Measures angle between two vectors. cos(A,B) = A·B / (||A|| ||B||). Ranges from -1 (opposite) to 1 (identical). The standard similarity metric for text embeddings.",
+            "ANN": "Approximate Nearest Neighbor. Trades perfect accuracy for speed using algorithms like HNSW. Finding exact nearest neighbors is O(n); ANN is O(log n)."
+          },
+          "migration_tips": {
+            "php": "Vector DBs are like Elasticsearch but for semantic meaning instead of keywords. `WHERE name LIKE '%search%'` → cosine similarity in 768-dimensional space. ChromaDB/Qdrant ≈ Redis but for vectors. You query by meaning, not by exact match.",
+            "java": "Think of embeddings as a hash function that preserves semantic similarity. `HashMap` lookup is exact match; vector search is 'find the most similar'. Qdrant ≈ Elasticsearch with vector support. ANN ≈ probabilistic `TreeMap` for high dimensions.",
+            "nodejs": "If you've used Elasticsearch, vector DBs are conceptually similar but search by meaning. MongoDB Atlas Search or Pinecone have JS SDKs. Embeddings ≈ a hash function where similar inputs produce similar hashes.",
+            "csharp": "Vector DB ≈ a `Dictionary<string, float[]>` with similarity-based lookup instead of exact match. Azure AI Search supports vector queries natively. Embeddings ≈ `GetHashCode()` but producing a 768-float array that preserves semantic relationships."
+          }
+        },
+        {
+          "id": "w19",
+          "week": 19,
+          "title": "RAG Architecture & Implementation",
+          "objectives": [
+            "Build a complete Retrieval-Augmented Generation pipeline",
+            "Implement chunking strategies, re-ranking, and query transformation",
+            "Handle edge cases: no results, conflicting information, long contexts"
+          ],
+          "tasks": [
+            {
+              "id": "t19-1",
+              "text": "Build a RAG pipeline: ingest → chunk → embed → store → retrieve → generate",
+              "done": false
+            },
+            {
+              "id": "t19-2",
+              "text": "Implement chunking strategies: fixed-size, recursive, semantic",
+              "done": false
+            },
+            {
+              "id": "t19-3",
+              "text": "Add a re-ranking step (cross-encoder or Cohere Rerank)",
+              "done": false
+            },
+            {
+              "id": "t19-4",
+              "text": "Implement query expansion and HyDE (Hypothetical Document Embeddings)",
+              "done": false
+            },
+            {
+              "id": "t19-5",
+              "text": "Handle multi-document QA with source attribution",
+              "done": false
+            },
+            {
+              "id": "t19-6",
+              "text": "Build a RAG chatbot with conversation memory",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "LangChain RAG Tutorial",
+              "url": "https://python.langchain.com/docs/tutorials/rag/",
+              "type": "docs"
+            },
+            {
+              "title": "LlamaIndex Documentation",
+              "url": "https://docs.llamaindex.ai/",
+              "type": "docs"
+            },
+            {
+              "title": "RAG Survey Paper",
+              "url": "https://arxiv.org/abs/2312.10997",
+              "type": "paper"
+            }
+          ],
+          "terminology": {
+            "RAG": "Retrieval-Augmented Generation. Fetch relevant documents from a knowledge base, inject them into the prompt, and let the LLM generate an answer grounded in evidence.",
+            "Chunking": "Splitting documents into smaller pieces for embedding. Chunk size affects retrieval precision — too large loses specificity, too small loses context.",
+            "Re-ranking": "After initial retrieval (fast but imprecise), re-score results with a more accurate cross-encoder model. Dramatically improves relevance.",
+            "HyDE": "Generate a hypothetical answer first, then use it as the search query. Often retrieves better documents than the original question."
+          },
+          "migration_tips": {
+            "php": "RAG is MVC for AI: Controller (orchestrator) receives a query, Model (vector DB + LLM) processes it, View (response) returns the answer. Chunking ≈ pagination strategy. Re-ranking ≈ applying a `ORDER BY relevance` after initial `WHERE` filtering.",
+            "java": "RAG pipeline ≈ a Spring Integration flow: Message → Transformer (chunk) → Router (retrieve) → Aggregator (re-rank) → Service Activator (LLM generate). Each step is a well-defined transformation with clear input/output contracts.",
+            "nodejs": "RAG is an API middleware chain: parse query → search vector DB → re-rank results → inject into prompt → call LLM → stream response. You can build this with Express/Fastify. LangChain/LlamaIndex add abstractions but aren't required.",
+            "csharp": "RAG pipeline ≈ `IRequestHandler<Query, Answer>` in MediatR. Chunking ≈ `IDocumentProcessor`. Retrieval ≈ `ISearchService`. Re-ranking ≈ `IResultSorter`. The pipeline pattern maps perfectly to your existing middleware/DI patterns."
+          }
+        },
+        {
+          "id": "w20",
+          "week": 20,
+          "title": "Model Serving & Inference Optimization",
+          "objectives": [
+            "Deploy models for production inference",
+            "Master vLLM, TGI, and Ollama for efficient serving",
+            "Implement batching, caching, and streaming"
+          ],
+          "tasks": [
+            {
+              "id": "t20-1",
+              "text": "Deploy a model with vLLM and benchmark throughput",
+              "done": false
+            },
+            {
+              "id": "t20-2",
+              "text": "Set up Ollama for local model serving with API access",
+              "done": false
+            },
+            {
+              "id": "t20-3",
+              "text": "Implement streaming responses with Server-Sent Events",
+              "done": false
+            },
+            {
+              "id": "t20-4",
+              "text": "Add KV-cache management and continuous batching",
+              "done": false
+            },
+            {
+              "id": "t20-5",
+              "text": "Build an OpenAI-compatible API wrapper for your served model",
+              "done": false
+            },
+            {
+              "id": "t20-6",
+              "text": "Load test your deployment and identify scaling bottlenecks",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "vLLM Documentation",
+              "url": "https://docs.vllm.ai/",
+              "type": "docs"
+            },
+            {
+              "title": "Text Generation Inference (HuggingFace)",
+              "url": "https://huggingface.co/docs/text-generation-inference",
+              "type": "docs"
+            },
+            {
+              "title": "Ollama",
+              "url": "https://ollama.com/",
+              "type": "tool"
+            }
+          ],
+          "terminology": {
+            "vLLM": "High-throughput LLM serving engine using PagedAttention. Handles batching, caching, and memory management automatically.",
+            "KV Cache": "Stores computed key-value pairs from previous tokens. Avoids recomputation during autoregressive generation. The main memory cost during inference.",
+            "Continuous Batching": "Dynamically adding/removing requests from a batch during generation. Maximizes GPU utilization vs. static batching.",
+            "PagedAttention": "vLLM's innovation: manages KV cache like OS virtual memory with paging. Eliminates memory fragmentation and enables larger batch sizes."
+          },
+          "migration_tips": {
+            "php": "Model serving is like running PHP-FPM — a process pool handling concurrent requests. vLLM ≈ nginx + PHP-FPM for AI. KV cache ≈ OPcache (caching intermediate computation). Continuous batching ≈ request queuing in a connection pool.",
+            "java": "vLLM is Tomcat for LLMs — manages request lifecycle, pooling, and resource allocation. KV cache ≈ JPA second-level cache. Continuous batching ≈ JDBC connection pool dynamic sizing. The operational patterns are identical.",
+            "nodejs": "Streaming responses with SSE is your forte — same pattern you use for real-time features. vLLM handles the ML-specific optimization (batching, caching) while you handle the API layer. Ollama gives you a local API identical to OpenAI's.",
+            "csharp": "vLLM ≈ Kestrel for ML models. KV cache ≈ `IDistributedCache`. Continuous batching ≈ `Channel<T>` producer-consumer pattern. Streaming ≈ `IAsyncEnumerable<string>`. The serving infrastructure maps cleanly to ASP.NET patterns."
+          }
+        },
+        {
+          "id": "w21",
+          "week": 21,
+          "title": "Evaluation & Benchmarking (Ragas & Beyond)",
+          "objectives": [
+            "Build comprehensive evaluation pipelines for LLM applications",
+            "Use Ragas for RAG evaluation metrics",
+            "Implement automated testing for LLM outputs"
+          ],
+          "tasks": [
+            {
+              "id": "t21-1",
+              "text": "Set up Ragas and evaluate your RAG pipeline (faithfulness, relevancy, etc.)",
+              "done": false
+            },
+            {
+              "id": "t21-2",
+              "text": "Implement LLM-as-a-judge evaluation for open-ended generation",
+              "done": false
+            },
+            {
+              "id": "t21-3",
+              "text": "Build a custom evaluation dataset with ground-truth answers",
+              "done": false
+            },
+            {
+              "id": "t21-4",
+              "text": "Implement regression testing: compare model versions on fixed test sets",
+              "done": false
+            },
+            {
+              "id": "t21-5",
+              "text": "Set up continuous evaluation in CI/CD for your LLM application",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Ragas Documentation",
+              "url": "https://docs.ragas.io/",
+              "type": "docs"
+            },
+            {
+              "title": "LLM Evaluation Best Practices (Anthropic)",
+              "url": "https://docs.anthropic.com/en/docs/build-with-claude/develop-tests",
+              "type": "docs"
+            },
+            {
+              "title": "Eleuther AI LM Evaluation Harness",
+              "url": "https://github.com/EleutherAI/lm-evaluation-harness",
+              "type": "code"
+            }
+          ],
+          "terminology": {
+            "Faithfulness": "Does the generated answer only use information from the retrieved context? Measures hallucination in RAG.",
+            "Answer Relevancy": "Is the generated answer relevant to the question asked? Orthogonal to faithfulness.",
+            "Context Precision": "Are the retrieved documents actually useful for answering the question? Measures retrieval quality.",
+            "LLM-as-Judge": "Using a stronger LLM to evaluate outputs of another LLM. Scalable but requires careful prompt engineering to avoid biases."
+          },
+          "migration_tips": {
+            "php": "Evaluation is your test suite for AI. PHPUnit assertions → Ragas metrics. `assertEquals()` doesn't work for natural language — you need semantic similarity and LLM-based judgment. CI/CD integration works the same way: fail the pipeline if quality drops.",
+            "java": "Think of Ragas metrics as custom JUnit assertions for ML. `assertThat(response).isFaithfulTo(context)`. Regression testing ≈ snapshot testing with `assertThat(newModel).isAtLeastAsGoodAs(oldModel)` on a fixed test set.",
+            "nodejs": "LLM evaluation is like integration testing — you can't unit test natural language. Use Ragas like you'd use Jest with custom matchers. CI integration: `npm test` → `ragas evaluate` in your pipeline. The metrics are your 'test coverage'.",
+            "csharp": "Ragas ≈ xUnit with custom `IAssert` implementations for semantic similarity. LLM-as-judge ≈ code review automation. Regression testing ≈ `[Theory]` tests with `[InlineData]` from your evaluation dataset. SpecFlow BDD could even define acceptance criteria."
+          }
+        },
+        {
+          "id": "w22",
+          "week": 22,
+          "title": "Prompt Engineering & LLM Application Patterns",
+          "objectives": [
+            "Master advanced prompt engineering techniques",
+            "Implement structured output, function calling, and tool use",
+            "Build production-grade LLM application patterns"
+          ],
+          "tasks": [
+            {
+              "id": "t22-1",
+              "text": "Implement Chain-of-Thought, Tree-of-Thought, and ReAct patterns",
+              "done": false
+            },
+            {
+              "id": "t22-2",
+              "text": "Use structured output (JSON mode, Pydantic models) with LLM APIs",
+              "done": false
+            },
+            {
+              "id": "t22-3",
+              "text": "Implement function calling / tool use with OpenAI and Anthropic APIs",
+              "done": false
+            },
+            {
+              "id": "t22-4",
+              "text": "Build a multi-step agent with planning and self-correction",
+              "done": false
+            },
+            {
+              "id": "t22-5",
+              "text": "Implement prompt versioning, A/B testing, and observability",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Anthropic Prompt Engineering Guide",
+              "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",
+              "type": "docs"
+            },
+            {
+              "title": "OpenAI Function Calling Guide",
+              "url": "https://platform.openai.com/docs/guides/function-calling",
+              "type": "docs"
+            },
+            {
+              "title": "LangSmith: LLM Observability",
+              "url": "https://docs.smith.langchain.com/",
+              "type": "tool"
+            },
+            {
+              "title": "DSPy: Programmatic Prompt Optimization",
+              "url": "https://dspy-docs.vercel.app/",
+              "type": "tool"
+            },
+            {
+              "title": "Instructor: Structured Output with Pydantic",
+              "url": "https://python.useinstructor.com/",
+              "type": "tool"
+            },
+            {
+              "title": "LiteLLM: Unified LLM API",
+              "url": "https://docs.litellm.ai/",
+              "type": "tool"
+            },
+            {
+              "title": "Full Stack Deep Learning (2023 Bootcamp)",
+              "url": "https://fullstackdeeplearning.com/",
+              "type": "course"
+            },
+            {
+              "title": "AI Engineering (Chip Huyen, 2024)",
+              "url": "https://www.oreilly.com/library/view/ai-engineering/9781098166298/",
+              "type": "book"
+            }
+          ],
+          "terminology": {
+            "Chain-of-Thought": "Prompting the model to show reasoning steps before giving a final answer. Dramatically improves accuracy on complex tasks.",
+            "ReAct": "Reason + Act pattern: the model alternates between thinking (reasoning) and acting (calling tools). The foundation of LLM agents.",
+            "Function Calling": "LLM generates structured JSON to invoke external functions. The bridge between natural language and deterministic code execution.",
+            "Structured Output": "Forcing LLM output to conform to a JSON schema or Pydantic model. Essential for reliable downstream processing."
+          },
+          "migration_tips": {
+            "php": "Function calling is your API route definition — you tell the LLM what 'endpoints' it can call, with typed parameters. Structured output ≈ request validation with Symfony forms. Prompt versioning ≈ database migrations for prompts.",
+            "java": "Function calling is like defining an RPC interface — the LLM knows the method signatures and generates the correct call. Structured output ≈ Jackson deserialization with schema validation. ReAct ≈ a state machine where the LLM drives transitions.",
+            "nodejs": "Function calling ≈ defining GraphQL resolvers that the LLM can invoke. Structured output ≈ Zod schema validation on LLM responses. Tool use ≈ Express middleware that the LLM orchestrates. The patterns are very familiar.",
+            "csharp": "Function calling ≈ defining `[ApiController]` endpoints that the LLM can invoke via generated DTOs. Structured output ≈ `JsonSerializer.Deserialize<T>()` with schema validation. ReAct ≈ `IStateMachine` where the LLM determines transitions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "title": "Capstone: Vertical AI Agent",
+      "description": "Build a production-ready, domain-specific AI agent from scratch. Apply everything you've learned in a real-world, end-to-end project.",
+      "weeks": "23–26",
+      "color": "#22c55e",
+      "migration_tips": {
+        "php": "This is your capstone — build a real product. Your web engineering experience is your superpower now. You know how to build reliable APIs, handle errors, design databases, and deploy. The LLM is just a new compute primitive in your architecture.",
+        "java": "Apply your enterprise engineering discipline: clean architecture, proper error handling, monitoring, and testing. The agent is a microservice with an LLM core. Your experience with complex systems is the differentiator.",
+        "nodejs": "Build a full-stack AI application. You have the frontend skills, the API skills, and now the ML skills. The agent is an event-driven system: receive input → reason → act → observe → repeat. Your async programming experience maps perfectly.",
+        "csharp": "Architect this like an enterprise application: CQRS for command handling, proper DI, structured logging, health checks. The AI capabilities plug into your existing architectural patterns. Ship production-quality software."
+      },
+      "weeks_detail": [
+        {
+          "id": "w23",
+          "week": 23,
+          "title": "Agent Architecture & Planning",
+          "objectives": [
+            "Design a complete AI agent architecture",
+            "Choose the right tools: LLM, retrieval, tools, memory",
+            "Implement the agent loop: Perceive → Think → Act → Observe"
+          ],
+          "tasks": [
+            {
+              "id": "t23-1",
+              "text": "Define your agent's domain, capabilities, and constraints",
+              "done": false
+            },
+            {
+              "id": "t23-2",
+              "text": "Design the agent architecture: orchestrator, tools, memory, retrieval",
+              "done": false
+            },
+            {
+              "id": "t23-3",
+              "text": "Implement the core agent loop with tool dispatch",
+              "done": false
+            },
+            {
+              "id": "t23-4",
+              "text": "Add conversation memory (short-term and long-term)",
+              "done": false
+            },
+            {
+              "id": "t23-5",
+              "text": "Implement error handling, retries, and graceful degradation",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Building Effective Agents (Anthropic)",
+              "url": "https://www.anthropic.com/engineering/building-effective-agents",
+              "type": "blog"
+            },
+            {
+              "title": "LangGraph: Agent Framework",
+              "url": "https://langchain-ai.github.io/langgraph/",
+              "type": "docs"
+            },
+            {
+              "title": "CrewAI: Multi-Agent Framework",
+              "url": "https://docs.crewai.com/",
+              "type": "docs"
+            },
+            {
+              "title": "Semantic Kernel (Microsoft)",
+              "url": "https://learn.microsoft.com/en-us/semantic-kernel/",
+              "type": "docs"
+            },
+            {
+              "title": "Papers With Code",
+              "url": "https://paperswithcode.com/",
+              "type": "tool"
+            }
+          ],
+          "terminology": {
+            "Agent Loop": "Perceive (get input) → Think (reason about action) → Act (execute tool) → Observe (process result) → repeat until done.",
+            "Tool Dispatch": "Mapping LLM's function call decisions to actual code execution. The bridge between AI reasoning and deterministic actions.",
+            "Agent Memory": "Short-term (conversation context) + long-term (persistent knowledge). Enables multi-session coherence and learning.",
+            "Guardrails": "Input/output validation, content filtering, and safety checks. Prevents the agent from taking harmful or unintended actions."
+          },
+          "migration_tips": {
+            "php": "The agent loop is a game loop: while(true) { receive_input(); think(); act(); observe(); }. Tool dispatch ≈ routing. Memory ≈ session storage. Guardrails ≈ middleware/security firewall. You've built this pattern hundreds of times.",
+            "java": "Agent = `CommandProcessor` in a CQRS system. Each tool = `CommandHandler`. Memory = `EventStore`. The agent loop = `ApplicationEventPublisher` driving a state machine. Apply clean architecture principles here.",
+            "nodejs": "The agent is an event-driven system: `agent.on('input', think).on('decision', act).on('result', observe)`. Tool dispatch ≈ route handler mapping. Memory ≈ Redis session store. This is your element.",
+            "csharp": "Agent ≈ `BackgroundService` processing `Channel<AgentMessage>`. Tool dispatch ≈ `IMediator.Send(new ToolCommand())`. Memory ≈ `IDistributedCache` + `DbContext`. Guardrails ≈ `IActionFilter` pipeline. Enterprise patterns apply directly."
+          }
+        },
+        {
+          "id": "w24",
+          "week": 24,
+          "title": "RAG Integration & Knowledge Management",
+          "objectives": [
+            "Build the agent's knowledge base with advanced RAG",
+            "Implement agentic RAG (agent decides when and what to retrieve)",
+            "Handle multi-source knowledge with conflict resolution"
+          ],
+          "tasks": [
+            {
+              "id": "t24-1",
+              "text": "Build a domain-specific knowledge base with multiple document types",
+              "done": false
+            },
+            {
+              "id": "t24-2",
+              "text": "Implement agentic RAG: agent decides when to search and what queries to use",
+              "done": false
+            },
+            {
+              "id": "t24-3",
+              "text": "Add multi-source retrieval with source attribution",
+              "done": false
+            },
+            {
+              "id": "t24-4",
+              "text": "Implement knowledge base updates and re-indexing pipeline",
+              "done": false
+            },
+            {
+              "id": "t24-5",
+              "text": "Add citation verification and hallucination detection",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "Agentic RAG (LlamaIndex)",
+              "url": "https://docs.llamaindex.ai/en/stable/examples/agent/agentic_rag/",
+              "type": "docs"
+            },
+            {
+              "title": "Advanced RAG Techniques",
+              "url": "https://arxiv.org/abs/2312.10997",
+              "type": "paper"
+            },
+            {
+              "title": "Anthropic: Contextual Retrieval",
+              "url": "https://www.anthropic.com/news/contextual-retrieval",
+              "type": "blog"
+            }
+          ],
+          "terminology": {
+            "Agentic RAG": "The agent autonomously decides when to retrieve, what queries to use, and how to combine multiple search results. More flexible than fixed RAG pipelines.",
+            "Multi-Source Retrieval": "Searching across multiple knowledge bases (documents, databases, APIs) and merging results with source tracking.",
+            "Citation Verification": "Cross-referencing generated claims with source documents. Critical for factual accuracy in production.",
+            "Re-indexing": "Updating the vector database when source documents change. Must handle incremental updates efficiently."
+          },
+          "migration_tips": {
+            "php": "Agentic RAG ≈ Doctrine's lazy loading, but the agent decides WHEN to query. Multi-source ≈ querying multiple databases and merging results. Re-indexing ≈ cache invalidation strategy. Citation ≈ audit logging for compliance.",
+            "java": "Agentic RAG ≈ the agent acts as a `SearchStrategy` that dynamically constructs `Specification` queries. Multi-source ≈ `CompositeRepository` pattern. Re-indexing ≈ Hibernate Search index updates.",
+            "nodejs": "Agentic RAG ≈ the agent dynamically calls different data sources (APIs, DBs, search) based on the query. Think of it as a smart API gateway. Re-indexing ≈ cache invalidation with webhooks.",
+            "csharp": "Agentic RAG ≈ `ISearchStrategy` pattern where the agent selects strategy at runtime. Multi-source ≈ `IRepository<T>` with multiple implementations behind a `CompositeRepository`. Re-indexing ≈ background `IHostedService` processing change events."
+          }
+        },
+        {
+          "id": "w25",
+          "week": 25,
+          "title": "Production Deployment & Monitoring",
+          "objectives": [
+            "Deploy the agent as a production service",
+            "Implement observability, logging, and cost tracking",
+            "Add A/B testing, feature flags, and gradual rollout"
+          ],
+          "tasks": [
+            {
+              "id": "t25-1",
+              "text": "Containerize the application with Docker",
+              "done": false
+            },
+            {
+              "id": "t25-2",
+              "text": "Deploy to cloud (AWS/GCP/Azure) with auto-scaling",
+              "done": false
+            },
+            {
+              "id": "t25-3",
+              "text": "Implement structured logging and distributed tracing",
+              "done": false
+            },
+            {
+              "id": "t25-4",
+              "text": "Add cost tracking per request (token usage, API costs)",
+              "done": false
+            },
+            {
+              "id": "t25-5",
+              "text": "Set up alerting for quality degradation and error spikes",
+              "done": false
+            },
+            {
+              "id": "t25-6",
+              "text": "Implement rate limiting, authentication, and API key management",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "LangFuse: LLM Observability",
+              "url": "https://langfuse.com/",
+              "type": "tool"
+            },
+            {
+              "title": "Deploying LLMs in Production (Chip Huyen)",
+              "url": "https://huyenchip.com/2023/04/11/llm-engineering.html",
+              "type": "blog"
+            },
+            {
+              "title": "Modal: Serverless ML Infrastructure",
+              "url": "https://modal.com/",
+              "type": "tool"
+            }
+          ],
+          "terminology": {
+            "LLM Observability": "Tracking LLM inputs, outputs, latency, token usage, and costs. LangFuse, LangSmith, and Helicone are popular platforms.",
+            "Token Economics": "Managing LLM costs by tracking token usage per request. A 100K-token context window at GPT-4 pricing adds up fast.",
+            "Guardrail Monitoring": "Tracking how often safety filters trigger. High trigger rates may indicate adversarial use or poor prompt design.",
+            "Graceful Degradation": "Falling back to simpler models or cached responses when the primary LLM is unavailable or too slow."
+          },
+          "migration_tips": {
+            "php": "This is pure DevOps — Docker, cloud deployment, monitoring. You've done this with PHP apps. The new dimension: LLM cost tracking. Token usage ≈ database query cost. Monitor p95 latency like you would for API endpoints.",
+            "java": "Spring Boot Actuator → LangFuse. Micrometer → token usage metrics. Docker + K8s deployment ≈ what you already do. The new concern: LLM costs can spiral without token budgets per request.",
+            "nodejs": "PM2/Docker/K8s deployment — same as always. Add LLM-specific observability: LangFuse for traces, token counting for cost. Rate limiting is critical — one bad prompt can cost $5 in tokens.",
+            "csharp": "Application Insights → LangFuse for LLM-specific observability. Health checks → model availability monitoring. Azure API Management → rate limiting and key management. The infrastructure patterns are identical."
+          }
+        },
+        {
+          "id": "w26",
+          "week": 26,
+          "title": "Polish, Evaluate & Portfolio",
+          "objectives": [
+            "Comprehensive evaluation of the capstone agent",
+            "Write documentation and create a demo",
+            "Build your portfolio and plan next steps"
+          ],
+          "tasks": [
+            {
+              "id": "t26-1",
+              "text": "Run full evaluation suite: accuracy, latency, cost, safety",
+              "done": false
+            },
+            {
+              "id": "t26-2",
+              "text": "Write technical documentation and architecture decision records",
+              "done": false
+            },
+            {
+              "id": "t26-3",
+              "text": "Record a demo video showing the agent in action",
+              "done": false
+            },
+            {
+              "id": "t26-4",
+              "text": "Write a blog post about your transition journey and lessons learned",
+              "done": false
+            },
+            {
+              "id": "t26-5",
+              "text": "Update resume/LinkedIn with AI engineering projects and skills",
+              "done": false
+            },
+            {
+              "id": "t26-6",
+              "text": "Identify 3 areas for continued learning post-roadmap",
+              "done": false
+            },
+            {
+              "id": "t26-7",
+              "text": "Contribute a PR to an open-source ML project (HuggingFace, vLLM, LangChain, etc.)",
+              "done": false
+            }
+          ],
+          "resources": [
+            {
+              "title": "How to Build an AI Portfolio (Chip Huyen)",
+              "url": "https://huyenchip.com/",
+              "type": "blog"
+            },
+            {
+              "title": "Designing Machine Learning Systems (Chip Huyen)",
+              "url": "https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/",
+              "type": "book"
+            },
+            {
+              "title": "AI Engineer Summit Talks",
+              "url": "https://www.ai.engineer/",
+              "type": "conference"
+            }
+          ],
+          "terminology": {
+            "Architecture Decision Record": "Document explaining why architectural choices were made. Invaluable for future you and for portfolio reviewers.",
+            "Evaluation Suite": "Comprehensive set of tests covering accuracy, latency, cost, safety, and edge cases. Your 'test pyramid' for AI.",
+            "Technical Portfolio": "Projects with code, documentation, and demos that demonstrate your capabilities. Quality over quantity.",
+            "Continuous Learning": "AI engineering evolves weekly. Build habits for staying current: papers, blogs, communities, building."
+          },
+          "migration_tips": {
+            "php": "Your PHP/web background is an ASSET, not a liability. Many AI engineers can train models but can't build production systems. You can. Lead with your full-stack capability + new AI skills. You're not 'switching from PHP' — you're adding AI to your toolkit.",
+            "java": "Enterprise experience + AI engineering = extremely hireable. Companies need people who can build robust, scalable AI systems — not just notebook prototypes. Your architectural discipline is your differentiator.",
+            "nodejs": "Full-stack JS + AI engineering = unicorn profile. You can build the entire stack: frontend, API, infrastructure, AND the AI components. Most AI engineers can't build a decent UI. You can.",
+            "csharp": "The .NET ecosystem is rapidly adding AI capabilities (Semantic Kernel, ML.NET, Azure AI). Your C# expertise + new AI skills positions you uniquely for enterprise AI adoption, where most companies already run on .NET."
+          }
+        }
+      ]
+    }
+  ]
+}
